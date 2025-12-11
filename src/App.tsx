@@ -52,12 +52,12 @@ function App() {
 
   const handleExecuteQuery = async () => {
     if (!sqlQuery.trim()) {
-      showStatusMessage('SQL クエリを入力してください', 'warning');
+      showStatusMessage('SQL を入力してください', 'warning');
       return;
     }
 
     try {
-      showStatusMessage('クエリを実行中', 'info');
+      showStatusMessage('SQL を実行中', 'info');
       setIsExecuting(true);
 
       const queryResults = await executeQuery(sqlQuery);
@@ -70,18 +70,29 @@ function App() {
 
       setResults(queryResults);
       setShowResults(true);
-      showStatusMessage('クエリが正常に実行されました', 'success');
+      showStatusMessage('SQL が正常に実行されました', 'success');
       setTimeout(hideStatus, 2000);
     } catch (error) {
-      showStatusMessage(`クエリエラー: ${error}`, 'error');
+      showStatusMessage(`SQL エラー: ${error}`, 'error');
       console.error('Query execution error:', error);
     } finally {
       setIsExecuting(false);
     }
   };
 
-  const getStatusClass = () => {
-    return `alert alert-${statusType}`;
+  const getBorderColor = () => {
+    switch (statusType) {
+      case 'info':
+        return 'border-info';
+      case 'success':
+        return 'border-success';
+      case 'error':
+        return 'border-error';
+      case 'warning':
+        return 'border-warning';
+      default:
+        return 'border-base-300';
+    }
   };
 
   if (initError) {
@@ -123,11 +134,9 @@ function App() {
               />
             </div>
 
-            {showStatus && (
-              <div className={`${getStatusClass()} mb-4`}>
-                <span>{statusMessage}</span>
-              </div>
-            )}
+            <div className={`rounded-lg p-4 mb-4 border-2 ${showStatus ? getBorderColor() : 'border-base-300'}`}>
+              <span>{statusMessage || '\u00A0'}</span>
+            </div>
 
             <div className="form-control w-full mb-4">
               <label className="label">
