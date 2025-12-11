@@ -98,8 +98,12 @@ function App() {
   if (initError) {
     return (
       <div className="min-h-screen bg-base-200 flex items-center justify-center">
-        <div className="alert alert-error max-w-md">
-          <span>{initError}</span>
+        <div className="card bg-base-100 shadow-xl p-8 max-w-md">
+          <div className="flex flex-col items-center gap-4">
+            <div className="text-6xl">😢</div>
+            <h2 className="text-2xl font-bold">エラー</h2>
+            <p className="text-center text-error">{initError}</p>
+          </div>
         </div>
       </div>
     );
@@ -108,8 +112,11 @@ function App() {
   if (!isInitialized) {
     return (
       <div className="min-h-screen bg-base-200 flex items-center justify-center">
-        <div className="alert alert-info max-w-md">
-          <span>DuckDB を初期化中...</span>
+        <div className="card bg-base-100 shadow-xl p-8">
+          <div className="flex flex-col items-center gap-4">
+            <div className="text-6xl animate-bounce">🦆</div>
+            <h2 className="text-2xl font-bold">Ahiru</h2>
+          </div>
         </div>
       </div>
     );
