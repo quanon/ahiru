@@ -20,7 +20,7 @@ async function initializeDuckDB() {
     showStatus('Initializing DuckDB...', 'info');
     await dbManager.initialize();
     isInitialized = true;
-    showStatus('DuckDB initialization completed', 'success');
+    showStatus('DuckDB initialization completed.', 'success');
     setTimeout(() => hideStatus(), 2000);
   } catch (error) {
     showStatus(`Initialization error: ${error}`, 'error');
@@ -53,7 +53,7 @@ csvFileInput.addEventListener('change', async (event) => {
   try {
     showStatus(`Loading ${file.name}...`, 'info');
     await dbManager.loadCSV(file);
-    showStatus(`${file.name} loaded successfully!`, 'success');
+    showStatus(`${file.name} loaded successfully.`, 'success');
     executeBtn.disabled = false;
     resultsSection.classList.add('hidden');
   } catch (error) {
@@ -66,7 +66,7 @@ csvFileInput.addEventListener('change', async (event) => {
 executeBtn.addEventListener('click', async () => {
   const query = sqlQueryTextarea.value.trim();
   if (!query) {
-    showStatus('Please enter SQL', 'warning');
+    showStatus('Please enter SQL.', 'warning');
     return;
   }
 
@@ -77,14 +77,14 @@ executeBtn.addEventListener('click', async () => {
     const results = await dbManager.executeQuery(query);
 
     if (results.length === 0) {
-      showStatus('No results found', 'info');
+      showStatus('No results found.', 'info');
       resultsSection.classList.add('hidden');
       executeBtn.disabled = false;
       return;
     }
 
     displayResults(results);
-    showStatus('SQL executed successfully', 'success');
+    showStatus('SQL executed successfully.', 'success');
     setTimeout(() => hideStatus(), 2000);
   } catch (error) {
     showStatus(`SQL error: ${error}`, 'error');
@@ -97,7 +97,7 @@ executeBtn.addEventListener('click', async () => {
 // Display query results as table
 function displayResults(results: any[]) {
   if (results.length === 0) {
-    resultsDiv.innerHTML = '<p class="text-center text-gray-500">No results</p>';
+    resultsDiv.innerHTML = '<p class="text-center text-gray-500">No results.</p>';
     return;
   }
 

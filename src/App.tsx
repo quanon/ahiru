@@ -34,16 +34,16 @@ function App() {
     if (!file) return;
 
     if (!isInitialized) {
-      showStatusMessage('Initializing DuckDB', 'warning');
+      showStatusMessage('Initializing DuckDB...', 'warning');
       return;
     }
 
     try {
-      showStatusMessage(`Loading ${file.name}`, 'info');
+      showStatusMessage(`Loading ${file.name}...`, 'info');
       const newTableName = await loadCSV(file);
       setTableName(newTableName);
       setSqlQuery(`SELECT * FROM "${newTableName}"`);
-      showStatusMessage(`${file.name} loaded successfully`, 'success');
+      showStatusMessage(`${file.name} loaded successfully.`, 'success');
       setIsFileLoaded(true);
       setShowResults(false);
       setTimeout(hideStatus, 2000);
@@ -55,25 +55,25 @@ function App() {
 
   const handleExecuteQuery = async () => {
     if (!sqlQuery.trim()) {
-      showStatusMessage('Please enter SQL', 'warning');
+      showStatusMessage('Please enter SQL.', 'warning');
       return;
     }
 
     try {
-      showStatusMessage('Executing SQL', 'info');
+      showStatusMessage('Executing SQL...', 'info');
       setIsExecuting(true);
 
       const queryResults = await executeQuery(sqlQuery);
 
       if (queryResults.length === 0) {
-        showStatusMessage('No results found', 'info');
+        showStatusMessage('No results found.', 'info');
         setShowResults(false);
         return;
       }
 
       setResults(queryResults);
       setShowResults(true);
-      showStatusMessage('SQL executed successfully', 'success');
+      showStatusMessage('SQL executed successfully.', 'success');
       setTimeout(hideStatus, 2000);
     } catch (error) {
       showStatusMessage(`SQL error: ${error}`, 'error');
