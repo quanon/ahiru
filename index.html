@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DuckDB CSV Search</title>
+</head>
+<body>
+  <div class="min-h-screen bg-base-200">
+    <div class="container mx-auto p-4">
+      <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+          <h1 class="card-title text-3xl mb-4">Ahiru</h1>
+
+          <!-- File Upload Section -->
+          <div class="form-control w-full mb-4">
+            <label class="label">
+              <span class="label-text">CSVファイルをアップロード</span>
+            </label>
+            <input
+              type="file"
+              id="csvFile"
+              accept=".csv"
+              class="file-input file-input-bordered file-input-primary w-full"
+            />
+          </div>
+
+          <!-- Status -->
+          <div id="status" class="alert mb-4 hidden">
+            <span id="statusText"></span>
+          </div>
+
+          <!-- SQL Query Section -->
+          <div class="form-control w-full mb-4">
+            <label class="label">
+              <span class="label-text">SQLクエリ</span>
+            </label>
+            <textarea
+              id="sqlQuery"
+              class="textarea textarea-bordered h-24 font-mono"
+              placeholder="SELECT * FROM data LIMIT 10"
+            >SELECT * FROM data LIMIT 10</textarea>
+          </div>
+
+          <div class="card-actions justify-end mb-4">
+            <button id="executeBtn" class="btn btn-primary" disabled>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+              </svg>
+              実行
+            </button>
+          </div>
+
+          <!-- Results Section -->
+          <div id="resultsSection" class="hidden">
+            <div class="divider">結果</div>
+            <div class="overflow-x-auto">
+              <div id="results" class="w-full"></div>
+            </div>
+            <div class="mt-2 text-sm text-base-content/70">
+              <span id="resultCount"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

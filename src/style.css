@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar for results */
+#results::-webkit-scrollbar {
+  height: 8px;
+}
+
+#results::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#results::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 4px;
+}
+
+#results::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+/* Smooth transitions */
+.alert {
+  transition: all 0.3s ease;
+}
