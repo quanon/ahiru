@@ -38,7 +38,7 @@ export class DuckDBManager {
 
     await this.db.registerFileBuffer(file.name, uint8Array);
 
-    // Extract table name from file name (remove extension)
+    // Remove extension.
     const tableName = file.name.replace(/\.[^/.]+$/, '');
 
     await this.conn.query(`DROP TABLE IF EXISTS "${tableName}"`);

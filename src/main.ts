@@ -4,7 +4,6 @@ import { DuckDBManager } from './duckdb';
 const dbManager = new DuckDBManager();
 let isInitialized = false;
 
-// DOM Elements
 const csvFileInput = document.getElementById('csvFile') as HTMLInputElement;
 const sqlQueryTextarea = document.getElementById('sqlQuery') as HTMLTextAreaElement;
 const executeBtn = document.getElementById('executeBtn') as HTMLButtonElement;
@@ -14,7 +13,6 @@ const resultsSection = document.getElementById('resultsSection') as HTMLDivEleme
 const resultsDiv = document.getElementById('results') as HTMLDivElement;
 const resultCount = document.getElementById('resultCount') as HTMLSpanElement;
 
-// Initialize DuckDB
 async function initializeDuckDB() {
   try {
     showStatus('Initializing DuckDB...', 'info');
@@ -28,19 +26,16 @@ async function initializeDuckDB() {
   }
 }
 
-// Show status message
 function showStatus(message: string, type: 'info' | 'success' | 'error' | 'warning') {
   statusDiv.classList.remove('hidden', 'alert-info', 'alert-success', 'alert-error', 'alert-warning');
   statusDiv.classList.add(`alert-${type}`);
   statusText.textContent = message;
 }
 
-// Hide status message
 function hideStatus() {
   statusDiv.classList.add('hidden');
 }
 
-// Handle CSV file upload
 csvFileInput.addEventListener('change', async (event) => {
   const file = (event.target as HTMLInputElement).files?.[0];
   if (!file) return;
@@ -62,7 +57,6 @@ csvFileInput.addEventListener('change', async (event) => {
   }
 });
 
-// Handle query execution
 executeBtn.addEventListener('click', async () => {
   const query = sqlQueryTextarea.value.trim();
   if (!query) {
@@ -71,7 +65,7 @@ executeBtn.addEventListener('click', async () => {
   }
 
   try {
-    showStatus('Executing SQL...', 'info');
+    showStatus('Running SQL...', 'info');
     executeBtn.disabled = true;
 
     const results = await dbManager.executeQuery(query);
@@ -84,7 +78,7 @@ executeBtn.addEventListener('click', async () => {
     }
 
     displayResults(results);
-    showStatus('SQL executed successfully.', 'success');
+    showStatus('SQL ran successfully.', 'success');
     setTimeout(() => hideStatus(), 2000);
   } catch (error) {
     showStatus(`SQL error: ${error}`, 'error');
@@ -94,7 +88,6 @@ executeBtn.addEventListener('click', async () => {
   }
 });
 
-// Display query results as table
 function displayResults(results: any[]) {
   if (results.length === 0) {
     resultsDiv.innerHTML = '<p class="text-center text-gray-500">No results.</p>';
@@ -124,12 +117,10 @@ function displayResults(results: any[]) {
   resultsSection.classList.remove('hidden');
 }
 
-// Escape HTML to prevent XSS
 function escapeHtml(text: string): string {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
 }
 
-// Initialize on load
 initializeDuckDB();

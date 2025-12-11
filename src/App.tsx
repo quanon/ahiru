@@ -60,7 +60,7 @@ function App() {
     }
 
     try {
-      showStatusMessage('Executing SQL...', 'info');
+      showStatusMessage('Running SQL...', 'info');
       setIsExecuting(true);
 
       const queryResults = await executeQuery(sqlQuery);
@@ -73,7 +73,7 @@ function App() {
 
       setResults(queryResults);
       setShowResults(true);
-      showStatusMessage('SQL executed successfully.', 'success');
+      showStatusMessage('SQL ran successfully.', 'success');
       setTimeout(hideStatus, 2000);
     } catch (error) {
       showStatusMessage(`SQL error: ${error}`, 'error');
@@ -178,7 +178,7 @@ function App() {
                     clipRule="evenodd"
                   />
                 </svg>
-                Execute
+                Run
               </button>
             </div>
 
