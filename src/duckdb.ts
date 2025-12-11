@@ -47,13 +47,13 @@ export class DuckDBManager {
     return tableName;
   }
 
-  async executeQuery(query: string): Promise<any[]> {
+  async executeQuery(query: string): Promise<Record<string, unknown>[]> {
     if (!this.conn) {
       throw new Error('DuckDB not initialized');
     }
 
     const result = await this.conn.query(query);
-    return result.toArray().map(row => row.toJSON());
+    return result.toArray().map(row => row.toJSON() as Record<string, unknown>);
   }
 
   async close(): Promise<void> {

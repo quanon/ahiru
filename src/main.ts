@@ -88,7 +88,7 @@ executeBtn.addEventListener('click', async () => {
   }
 });
 
-function displayResults(results: any[]) {
+function displayResults(results: Record<string, unknown>[]) {
   if (results.length === 0) {
     resultsDiv.innerHTML = '<p class="text-center text-gray-500">No results.</p>';
     return;

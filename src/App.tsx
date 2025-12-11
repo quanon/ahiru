@@ -2,7 +2,7 @@ import { useState, ChangeEvent } from 'react';
 import { useDuckDB } from './hooks/useDuckDB';
 
 interface QueryResult {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 type StatusType = 'info' | 'success' | 'error' | 'warning';

@@ -7,9 +7,11 @@ export function useDuckDB() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let manager: DuckDBManager | null = null;
+
     const initDB = async () => {
       try {
-        const manager = new DuckDBManager();
+        manager = new DuckDBManager();
         await manager.initialize();
         setDb(manager);
         setIsInitialized(true);
@@ -22,8 +24,8 @@ export function useDuckDB() {
     initDB();
 
     return () => {
-      if (db) {
-        db.close();
+      if (manager) {
+        manager.close();
       }
     };
   }, []);
