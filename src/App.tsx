@@ -34,49 +34,49 @@ function App() {
     if (!file) return;
 
     if (!isInitialized) {
-      showStatusMessage('DuckDB を初期化中', 'warning');
+      showStatusMessage('Initializing DuckDB', 'warning');
       return;
     }
 
     try {
-      showStatusMessage(`${file.name} を読み込み中`, 'info');
+      showStatusMessage(`Loading ${file.name}`, 'info');
       const newTableName = await loadCSV(file);
       setTableName(newTableName);
       setSqlQuery(`SELECT * FROM "${newTableName}"`);
-      showStatusMessage(`${file.name} の読み込みが完了しました`, 'success');
+      showStatusMessage(`${file.name} loaded successfully`, 'success');
       setIsFileLoaded(true);
       setShowResults(false);
       setTimeout(hideStatus, 2000);
     } catch (error) {
-      showStatusMessage(`CSV の読み込みエラー: ${error}`, 'error');
+      showStatusMessage(`CSV load error: ${error}`, 'error');
       console.error('CSV load error:', error);
     }
   };
 
   const handleExecuteQuery = async () => {
     if (!sqlQuery.trim()) {
-      showStatusMessage('SQL を入力してください', 'warning');
+      showStatusMessage('Please enter SQL', 'warning');
       return;
     }
 
     try {
-      showStatusMessage('SQL を実行中', 'info');
+      showStatusMessage('Executing SQL', 'info');
       setIsExecuting(true);
 
       const queryResults = await executeQuery(sqlQuery);
 
       if (queryResults.length === 0) {
-        showStatusMessage('結果が見つかりませんでした', 'info');
+        showStatusMessage('No results found', 'info');
         setShowResults(false);
         return;
       }
 
       setResults(queryResults);
       setShowResults(true);
-      showStatusMessage('SQL が正常に実行されました', 'success');
+      showStatusMessage('SQL executed successfully', 'success');
       setTimeout(hideStatus, 2000);
     } catch (error) {
-      showStatusMessage(`SQL エラー: ${error}`, 'error');
+      showStatusMessage(`SQL error: ${error}`, 'error');
       console.error('Query execution error:', error);
     } finally {
       setIsExecuting(false);
@@ -104,7 +104,7 @@ function App() {
         <div className="card bg-base-100 shadow-xl p-8 max-w-md">
           <div className="flex flex-col items-center gap-4">
             <div className="text-6xl">😢</div>
-            <h2 className="text-2xl font-bold">エラー</h2>
+            <h2 className="text-2xl font-bold">Error</h2>
             <p className="text-center text-error">{initError}</p>
           </div>
         </div>
@@ -178,7 +178,7 @@ function App() {
                     clipRule="evenodd"
                   />
                 </svg>
-                実行
+                Execute
               </button>
             </div>
 
@@ -207,7 +207,7 @@ function App() {
                   </table>
                 </div>
                 <div className="mt-2 text-sm text-base-content/70">
-                  <span>{results.length} 行</span>
+                  <span>{results.length} {results.length === 1 ? 'row' : 'rows'}</span>
                 </div>
               </div>
             )}

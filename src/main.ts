@@ -17,13 +17,13 @@ const resultCount = document.getElementById('resultCount') as HTMLSpanElement;
 // Initialize DuckDB
 async function initializeDuckDB() {
   try {
-    showStatus('DuckDBを初期化中...', 'info');
+    showStatus('Initializing DuckDB...', 'info');
     await dbManager.initialize();
     isInitialized = true;
-    showStatus('DuckDBの初期化が完了しました', 'success');
+    showStatus('DuckDB initialization completed', 'success');
     setTimeout(() => hideStatus(), 2000);
   } catch (error) {
-    showStatus(`初期化エラー: ${error}`, 'error');
+    showStatus(`Initialization error: ${error}`, 'error');
     console.error('DuckDB initialization error:', error);
   }
 }
@@ -46,18 +46,18 @@ csvFileInput.addEventListener('change', async (event) => {
   if (!file) return;
 
   if (!isInitialized) {
-    showStatus('DuckDBがまだ初期化されていません。少々お待ちください...', 'warning');
+    showStatus('DuckDB is not yet initialized. Please wait...', 'warning');
     return;
   }
 
   try {
-    showStatus(`${file.name} を読み込み中...`, 'info');
+    showStatus(`Loading ${file.name}...`, 'info');
     await dbManager.loadCSV(file);
-    showStatus(`${file.name} の読み込みが完了しました！`, 'success');
+    showStatus(`${file.name} loaded successfully!`, 'success');
     executeBtn.disabled = false;
     resultsSection.classList.add('hidden');
   } catch (error) {
-    showStatus(`CSVの読み込みエラー: ${error}`, 'error');
+    showStatus(`CSV load error: ${error}`, 'error');
     console.error('CSV load error:', error);
   }
 });
@@ -66,28 +66,28 @@ csvFileInput.addEventListener('change', async (event) => {
 executeBtn.addEventListener('click', async () => {
   const query = sqlQueryTextarea.value.trim();
   if (!query) {
-    showStatus('SQL を入力してください', 'warning');
+    showStatus('Please enter SQL', 'warning');
     return;
   }
 
   try {
-    showStatus('SQL を実行中...', 'info');
+    showStatus('Executing SQL...', 'info');
     executeBtn.disabled = true;
 
     const results = await dbManager.executeQuery(query);
 
     if (results.length === 0) {
-      showStatus('結果が見つかりませんでした', 'info');
+      showStatus('No results found', 'info');
       resultsSection.classList.add('hidden');
       executeBtn.disabled = false;
       return;
     }
 
     displayResults(results);
-    showStatus('SQL が正常に実行されました', 'success');
+    showStatus('SQL executed successfully', 'success');
     setTimeout(() => hideStatus(), 2000);
   } catch (error) {
-    showStatus(`SQL エラー: ${error}`, 'error');
+    showStatus(`SQL error: ${error}`, 'error');
     console.error('Query execution error:', error);
   } finally {
     executeBtn.disabled = false;
@@ -97,7 +97,7 @@ executeBtn.addEventListener('click', async () => {
 // Display query results as table
 function displayResults(results: any[]) {
   if (results.length === 0) {
-    resultsDiv.innerHTML = '<p class="text-center text-gray-500">結果がありません</p>';
+    resultsDiv.innerHTML = '<p class="text-center text-gray-500">No results</p>';
     return;
   }
 
@@ -120,7 +120,7 @@ function displayResults(results: any[]) {
 
   tableHTML += '</tbody></table>';
   resultsDiv.innerHTML = tableHTML;
-  resultCount.textContent = `${results.length} 行の結果`;
+  resultCount.textContent = `${results.length} ${results.length === 1 ? 'row' : 'rows'}`;
   resultsSection.classList.remove('hidden');
 }
 
