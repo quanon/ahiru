@@ -141,7 +141,7 @@ function App() {
               />
             </div>
 
-            <div className={`rounded-lg p-4 mb-4 border-2 ${showStatus ? getBorderColor() : 'border-base-300'}`}>
+            <div className={`rounded-lg p-4 mb-4 border ${showStatus ? getBorderColor() : 'border-base-300'}`}>
               <span>{statusMessage || '\u00A0'}</span>
             </div>
 
