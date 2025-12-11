@@ -24,7 +24,7 @@ export class DuckDBManager {
     const worker = new Worker(bundle.mainWorker!);
     const logger = new duckdb.ConsoleLogger();
     this.db = new duckdb.AsyncDuckDB(logger, worker);
-    await this.db.instantiate(bundle.mainModule);
+    await this.db.instantiate(bundle.mainModule, bundle.pthreadWorker);
     this.conn = await this.db.connect();
   }
 
