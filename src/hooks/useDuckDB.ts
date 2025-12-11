@@ -33,7 +33,7 @@ export function useDuckDB() {
       if (!db || !isInitialized) {
         throw new Error('DuckDB not initialized');
       }
-      await db.loadCSV(file);
+      return await db.loadCSV(file);
     },
     [db, isInitialized]
   );

@@ -9,7 +9,8 @@ type StatusType = 'info' | 'success' | 'error' | 'warning';
 
 function App() {
   const { isInitialized, error: initError, loadCSV, executeQuery } = useDuckDB();
-  const [sqlQuery, setSqlQuery] = useState('SELECT * FROM data LIMIT 10');
+  const [tableName, setTableName] = useState('data');
+  const [sqlQuery, setSqlQuery] = useState('SELECT * FROM data');
   const [results, setResults] = useState<QueryResult[]>([]);
   const [statusMessage, setStatusMessage] = useState('');
   const [statusType, setStatusType] = useState<StatusType>('info');
@@ -39,7 +40,9 @@ function App() {
 
     try {
       showStatusMessage(`${file.name} を読み込み中`, 'info');
-      await loadCSV(file);
+      const newTableName = await loadCSV(file);
+      setTableName(newTableName);
+      setSqlQuery(`SELECT * FROM "${newTableName}"`);
       showStatusMessage(`${file.name} の読み込みが完了しました`, 'success');
       setIsFileLoaded(true);
       setShowResults(false);
@@ -153,7 +156,7 @@ function App() {
                 value={sqlQuery}
                 onChange={(e) => setSqlQuery(e.target.value)}
                 className="textarea textarea-bordered h-24 font-mono"
-                placeholder="SELECT * FROM data LIMIT 10"
+                placeholder={`SELECT * FROM "${tableName}"`}
               />
             </div>
 

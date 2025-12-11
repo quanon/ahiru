@@ -28,7 +28,7 @@ export class DuckDBManager {
     this.conn = await this.db.connect();
   }
 
-  async loadCSV(file: File): Promise<void> {
+  async loadCSV(file: File): Promise<string> {
     if (!this.db || !this.conn) {
       throw new Error('DuckDB not initialized');
     }
@@ -38,8 +38,13 @@ export class DuckDBManager {
 
     await this.db.registerFileBuffer(file.name, uint8Array);
 
-    await this.conn.query(`DROP TABLE IF EXISTS data`);
-    await this.conn.query(`CREATE TABLE data AS SELECT * FROM read_csv_auto('${file.name}')`);
+    // Extract table name from file name (remove extension)
+    const tableName = file.name.replace(/\.[^/.]+$/, '');
+
+    await this.conn.query(`DROP TABLE IF EXISTS "${tableName}"`);
+    await this.conn.query(`CREATE TABLE "${tableName}" AS SELECT * FROM read_csv_auto('${file.name}')`);
+
+    return tableName;
   }
 
   async executeQuery(query: string): Promise<any[]> {
