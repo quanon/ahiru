@@ -24,4 +24,5 @@ lerna-debug.log*
 *.sln
 *.sw?
 
+.vscode
 .claude
