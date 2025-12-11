@@ -136,6 +136,9 @@ function App() {
               <label className="label">
                 <span className="label-text">CSV</span>
               </label>
+              <p className="text-sm text-base-content/70 mb-2 px-1">
+                The CSV filename becomes the table name (e.g., birds.csv → birds).
+              </p>
               <input
                 type="file"
                 accept=".csv"
